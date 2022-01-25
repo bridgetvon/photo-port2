@@ -4,6 +4,7 @@ import About from './components/About';
 import Gallery from './components/Gallery';
 import ContactForm from './components/Contact';
 
+
 function App() {
   //lift the state up so its props can be used in multiple sibling components
   const [categories] = useState([
@@ -18,17 +19,28 @@ function App() {
 
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
+  //condition the form rendering
+  //here we set the initial state of contact selected to false 
+  const [contactSelected, setContactSelected] = useState(false);
+
   return (
     <div>
       <Nav
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+       {!contactSelected ? (
+         <>
+         <Gallery currentCategory={currentCategory}></Gallery>
+         <About></About>
+         </>
+       ) : (
+         <ContactForm></ContactForm>
+       )}
       </main>
     </div>
   );
